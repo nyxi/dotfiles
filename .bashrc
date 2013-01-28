@@ -2,4 +2,4 @@ export PS1="\[\033[0;32m\](\[\033[1;37m\]\\u\[\033[1;33m\]@\[\033[1;37m\]\\h\[\0
 eval $(dircolors .dir_colors)
 alias ls='ls --color=auto'
 [[ $- != *i* ]] && return
-fortune linux
+[[ "$PS1" ]] && fortune linux
