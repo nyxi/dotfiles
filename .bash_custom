@@ -18,4 +18,4 @@ alias um="fusermount -u ~/Music"
 alias upgrade='apt-get update && apt-get upgrade && apt-get clean'
 [[ $- != *i* ]] && return
 [[ "$PS1" ]] && return
-[[ "$(which fortuness)" ]] && fortune linux
+[[ "$(which fortune)" ]] && fortune linux
