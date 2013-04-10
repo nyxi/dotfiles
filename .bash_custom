@@ -17,5 +17,4 @@ servedir(){
 alias um="fusermount -u ~/Music"
 alias upgrade='apt-get update && apt-get upgrade && apt-get clean'
 [[ $- != *i* ]] && return
-[[ "$PS1" ]] && return
-[[ "$(which fortune)" ]] && fortune linux
+[[ "$PS1" ]] && if [ "$(which fortune)" != "" ]; then fortune linux; fi
