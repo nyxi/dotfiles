@@ -37,6 +37,7 @@ upgrade() {
 #   ALIASES   #
 ###############
 alias confcat="sed -e 's/[#;].*//;/^\s*$/d' "$@""
+alias l.='ls -d "$1".* --color=auto'
 alias ls='ls --color=auto'
 alias eip="echo "$(curl -s http://nyxi.eu/ip.php)""
 alias mkdir="mkdir -pv"
