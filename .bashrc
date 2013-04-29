@@ -22,7 +22,13 @@ genpw() { tr -dc 'A-Za-z0-9!@#$%^&*' < /dev/urandom | fold -w 12 | head -n 1; }
 
 lo() { $1 & > /dev/null  2>&1; }
 
-servedir() { sudo python -m SimpleHTTPServer 80; }
+servedir() {
+	if [ "$(whoami)" == "root" ]; then
+		python -m SimpleHTTPServer 80
+	else
+		sudo python -m SimpleHTTPServer 80
+	fi
+}
 
 upgrade() {
 	if [ "$(whoami)" == "root" ]; then
