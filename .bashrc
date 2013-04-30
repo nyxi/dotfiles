@@ -1,5 +1,5 @@
 export PS1="\[\033[0;32m\](\[\033[1;37m\]\\u\[\033[1;33m\]@\[\033[1;37m\]\\h\[\033[0;32m\]) \[\033[1;37m\]\\W\[\033[0;32m\] \$ \[\033[0;38m\]"
-eval $(dircolors .dir_colors)
+eval $(dircolors ~/.dir_colors)
 
 #################
 #   FUNCTIONS   #
@@ -10,11 +10,10 @@ authme() {
 }
 
 iip() {
-	cmd="ifconfig | grep 'inet addr' | grep -v '127.0.0.1' | sed -e 's/^.*addr://g' -e 's/ .*//g'"
 	if [ "$(whoami)" == "root" ]; then
-		$cmd
+		ifconfig | grep 'inet addr' | grep -v '127.0.0.1' | sed -e 's/^.*addr://g' -e 's/ .*//g'
 	else
-		sudo $cmd
+		sudo ifconfig | grep 'inet addr' | grep -v '127.0.0.1' | sed -e 's/^.*addr://g' -e 's/ .*//g'
 	fi
 }
 
@@ -50,6 +49,7 @@ alias mkdir="mkdir -pv"
 alias mm="sshfs -o idmap=user root@hem.nyxi.eu:/mnt/nas/Musik ~/Music"
 alias mount="mount | column -t"
 alias mpc="mpc -f '%position%. %artist% - %title%'"
+alias mpd="mpd && mpdas -d"
 alias um="fusermount -u ~/Music"
 
 
