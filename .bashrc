@@ -10,11 +10,7 @@ authme() {
 }
 
 iip() {
-	if [ "$(whoami)" == "root" ]; then
-		ifconfig | grep 'inet addr' | grep -v '127.0.0.1' | sed -e 's/^.*addr://g' -e 's/ .*//g'
-	else
-		sudo ifconfig | grep 'inet addr' | grep -v '127.0.0.1' | sed -e 's/^.*addr://g' -e 's/ .*//g'
-	fi
+	ip a | grep "inet " | sed -e 's/^.*inet //g' -e 's/\/.*//g' | grep -v '127.0.0.1'
 }
 
 genpw() { tr -dc 'A-Za-z0-9!@#$%^&*' < /dev/urandom | fold -w 12 | head -n 1; }
