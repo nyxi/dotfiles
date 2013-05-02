@@ -25,6 +25,10 @@ servedir() {
 	fi
 }
 
+syncbrc() {
+	curl -so ~/.bashrc https://raw.github.com/nyxi/dotfiles/master/.bashrc && echo "Updated ~/.bashrc from github"
+}
+
 upgrade() {
 	if [ "$(whoami)" == "root" ]; then
 		apt-get update && apt-get upgrade && apt-get clean
