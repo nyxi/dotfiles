@@ -4,6 +4,14 @@ eval $(dircolors ~/.dir_colors)
 #################
 #   FUNCTIONS   #
 #################
+ifroot() {
+	if [ "$(whoami)" == "root" ]; then
+		$1
+	else
+		sudo $1
+	fi
+}
+
 authme() {
 	ssh "$1" 'mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys' \
 	< ~/.ssh/id_rsa.pub
@@ -34,6 +42,27 @@ upgrade() {
 		apt-get update && apt-get upgrade && apt-get clean
 	else
 		sudo apt-get update && sudo apt-get upgrade && sudo apt-get clean
+	fi
+}
+
+wlscan() {
+	if [ "$1" != "" ]; then
+		ifroot "iwlist $1 scan | grep "ESSID:" | sed -e 's/ //g' -e 's/ESSID:\"//g' -e 's/\"//g' | sort -u"
+	else
+		echo "Must provide name of interface to scan"
+	fi
+}
+
+wlsetup() {
+	if [ "$1" != "" ] && [ "$2" != "" ]; then
+		wpaconf="$(mktemp)"
+		wpa_passphrase "$1" "$2" > $wpaconf 2> /dev/null
+		echo "Running wpa_supplicant.."
+		ifroot "wpa_supplicant -B -i wlan0 -c $wpaconf 2> /dev/null"
+		echo "Waiting 3s before running dhclient.."
+		sleep 3
+		echo "Running dhclient.."
+		ifroot "dhclient wlan0"
 	fi
 }
 
