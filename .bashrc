@@ -8,7 +8,8 @@ ifroot() {
 	if [ "$(whoami)" == "root" ]; then
 		$1
 	else
-		sudo $1
+		lulz="sudo $1"
+		eval $lulz
 	fi
 }
 
@@ -26,11 +27,7 @@ genpw() { tr -dc 'A-Za-z0-9!@#$%^&*' < /dev/urandom | fold -w 12 | head -n 1; }
 lo() { $1 & > /dev/null  2>&1; }
 
 servedir() {
-	if [ "$(whoami)" == "root" ]; then
-		python -m SimpleHTTPServer 80
-	else
-		sudo python -m SimpleHTTPServer 80
-	fi
+	ifroot "python -m SimpleHTTPServer 80"
 }
 
 syncbrc() {
@@ -63,6 +60,8 @@ wlsetup() {
 		sleep 3
 		echo "Running dhclient.."
 		ifroot "dhclient wlan0"
+	else
+		echo "Usage: wlsetup nameofnetwork password"
 	fi
 }
 
